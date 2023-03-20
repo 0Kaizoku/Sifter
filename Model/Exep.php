@@ -27,4 +27,15 @@ class Exp extends Connection {
         $exp= $stmt->fetch(PDO::FETCH_ASSOC);
         return  $exp;
     }
+
+    public function Expscore($id){
+        $query="SELECT TIMESTAMPDIFF(MONTH,dateDebut,dateFin)as durre ,nom FROM poste WHERE idc=:id";
+        $stmt = $this->connect()->prepare($query);
+        $stmt->bindParam(":id", $id);
+        $stmt->execute();
+        $exps= $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $exps;
+
+    }
+    
 }

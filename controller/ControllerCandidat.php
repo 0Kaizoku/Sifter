@@ -18,55 +18,6 @@ class ControllerCandidat extends Candidat{
     }
     
 }
-////////////////////////////////////////////////////////////////////////////
-
-    public function score(){
-        if(isset($_POST["sumbit"])){
-          
-           $score= $this->calculCompte();
-
-            $this->setScore($_SESSION["id"],$score);
-        }
-    
-    }
-
-    public function calculCompte(){
-        $comp=new ComCandidat(); 
-        $nonEq=$comp->getCom($_SESSION["id"]);
-        $equal= $comp->ContgetCom($_SESSION["id"],$_POST["domaine"]);
-        $nonEq=$nonEq-$equal;
-        $compScore = ($equal*2)+$nonEq;
-        return $compScore;
-    }       
-
-    public function  culculExp(){
-        $exp = new Exp();
-        $exps = $exp->Expscore($_SESSION["id"]);
-        $scor=0;
-        $sd=0; // initialize the variable before the loop
-        foreach($exps as $esp ){
-            if($esp["durre"]<1){
-                $sd=0;
-            }else if($esp["durre"]<6){
-                $sd=1;
-            }else if($esp["durre"]<12){
-                $sd=2;
-            }else if($esp["durre"]<24){
-                $sd=4;
-            }else{
-                $sd=6;
-            }
-            if($esp["nom"]=='Stage'){
-                $sd=$sd;
-            }else{
-                $sd=$sd*2;
-            }
-            $scor=$scor+$sd;
-        }
-
-        return $scor;
-    }
-//////////////////////////////////////////////////////////////////////
 
     public function setChoix(){
 
@@ -110,4 +61,53 @@ class ControllerCandidat extends Candidat{
     return $json;
         }
     }
+
+////////////////////////////////////////////////////////////////////////////
+
+    public function score(){
+        if(isset($_POST["sumbit"])){
+        
+        $score= $this->calculCompte();
+
+        $this->setScore($_SESSION["id"],$score);
+        }
+
+    }
+
+    public function calculCompte(){
+        $comp=new ComCandidat(); 
+        $nonEq=$comp->getCom($_SESSION["id"]);
+        $equal= $comp->ContgetCom($_SESSION["id"],$_POST["domaine"]);
+        $nonEq=$nonEq-$equal;
+        $compScore = ($equal*2)+$nonEq;
+        return $compScore;
+    }       
+
+    public function  culculExp(){
+        $exp = new Exp();
+        $exps = $exp->Expscore($_SESSION["id"]);
+        $scor=0;
+        $sd=0; // initialize the variable before the loop
+        foreach($exps as $esp ){
+            if($esp["durre"]<1){
+                $sd=0;
+            }else if($esp["durre"]<6){
+                $sd=1;
+            }else if($esp["durre"]<12){
+                $sd=2;
+            }else if($esp["durre"]<24){
+                $sd=4;
+            }else{
+                $sd=6;
+            }
+            if($esp["nom"]=='Stage'){
+                $sd=$sd;
+            }else{
+                $sd=$sd*2;
+            }
+            $scor=$scor+$sd;
+        }
+        return $scor;
+    }
+//////////////////////////////////////////////////////////////////////
 }
