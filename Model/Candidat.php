@@ -93,11 +93,8 @@ public function setScore($id,$score){
         $stmt->closeCursor();
     }
     
-    
     public function test(){
-
-
-        
+    
 
     }
 

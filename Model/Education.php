@@ -29,7 +29,14 @@ class Education extends Connection {
         $stmt->execute();
     }
 
-    
+    public function EduScore($id){
+        $query="SELECT nom FROM Education WHERE idc=:id";
+        $stmt = $this->connect()->prepare($query);
+        $stmt->bindParam(":id", $id);
+        $stmt->execute();
+        $edu= $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $edu;
+    }
 }
 
 ?>
