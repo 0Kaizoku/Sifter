@@ -2,6 +2,7 @@
 
 require_once dirname(__DIR__) . "/Model/Connexion.php";
 require_once dirname(__DIR__) . "/Model/competences.php";
+
 class ComCandidat extends Connection {
 
     public function setCom($nom,$dom,$id){

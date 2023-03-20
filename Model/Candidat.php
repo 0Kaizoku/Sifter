@@ -29,10 +29,10 @@ class Candidat extends Connection {
         return true;
     }
 
-public function setScore($id,$score){
-    $query="UPDATE  candidat SET Score=:score WHERE idc=:id";
-    $stmt=$this->connect()->prepare($query);
-    $stmt->bindParam(":score", $score);
+    public function setScore($id,$score){
+        $query="UPDATE  candidat SET Score=:score WHERE idc=:id";
+        $stmt=$this->connect()->prepare($query);
+        $stmt->bindParam(":score", $score);
         $stmt->bindParam(":id", $id);
         $stmt->execute();
 }
