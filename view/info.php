@@ -166,8 +166,8 @@ $edu->Update();
           <select class="form-select" id="validationCustom07" name="validationCustom07" required>
             <option>Doctorat</option>
             <option>Master</option>
-            <option>License</option>
-            <option>Bac</option>
+            <option>Licence</option>
+            <option>Baccalauréat</option>
           </select> 
         </div>
         <div class="row"> 

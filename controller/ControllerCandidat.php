@@ -2,7 +2,7 @@
 require_once dirname(__DIR__) . '/Model/Candidat.php'; 
 require_once dirname(__DIR__) .'/vendor/autoload.php';
 require_once dirname(__DIR__) . '/Model/ComCandit.php';
-
+require_once dirname(__DIR__) . '/Model/Education.php';
 
 use Smalot\PdfParser\Parser;
 class ControllerCandidat extends Candidat{
@@ -16,8 +16,7 @@ class ControllerCandidat extends Candidat{
             $this->updateCandidat($_POST["nom"],$_POST["prenom"],$_POST["ville"],$_POST["telephone"],$_POST["domaine"],$_SESSION["id"]);
         }
     }
-    
-}
+    }
 
     public function setChoix(){
 
@@ -62,12 +61,10 @@ class ControllerCandidat extends Candidat{
         }
     }
 
-////////////////////////////////////////////////////////////////////////////
-
     public function score(){
         if(isset($_POST["sumbit"])){
         
-        $score= $this->calculCompte();
+        $score=$this->calculCompte()*0.3+$this->calculedu()*0.3;
 
         $this->setScore($_SESSION["id"],$score);
         }
@@ -81,7 +78,26 @@ class ControllerCandidat extends Candidat{
         $nonEq=$nonEq-$equal;
         $compScore = ($equal*2)+$nonEq;
         return $compScore;
-    }       
+    }      
+    public function calculedu(){
+        $educ= new EduCandidat();
+        $educa= $educ->getEducation($_SESSION["id"]);
+        $score=0;
+        foreach($educa as $edc ){
+        if($edc["nom"]=='Baccalaréat'){
+            $score=$score;
+        }else if ($edc["nom"]=='Licence'){
+            $score=$score+1;
+        }else if ($edc["nom"]=='Master'){
+            $score=$score+2;
+        }else if ($edc["nom"]=='Doctorat'){
+            $score=$score+3;
+        }else{
+            $score=0;
+        }
+        return $score;
+    }
+    } 
 
     public function  culculExp(){
         $exp = new Exp();
@@ -109,5 +125,5 @@ class ControllerCandidat extends Candidat{
         }
         return $scor;
     }
-//////////////////////////////////////////////////////////////////////
+
 }
