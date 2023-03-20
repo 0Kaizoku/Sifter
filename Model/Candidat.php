@@ -4,8 +4,6 @@ require_once dirname(__DIR__) . "/Model/Connexion.php";
 
 class Candidat extends Connection {
 
-
-
         public function getUser($gmail, $modePass) {
         $query = "SELECT * FROM Candidat  WHERE gmail = :gmail AND modPass = :modePass";
         $stmt = $this->connect()->prepare($query);
@@ -63,10 +61,10 @@ public function setScore($id,$score){
     
     public function UpdateCandidat($nom,$prenom,$ville,$tel,$domaine,$id){
         $query="UPDATE  candidat SET nom=:nom , prenom=:prenom , Tele=:tete , ville=:ville , domaine =:domaine WHERE idc=:id";
-         $stmt=$this->connect()->prepare($query);
-         $stmt->bindParam(":nom", $nom);
-         $stmt->bindParam(":prenom", $prenom);
-         $stmt->bindParam(":tete", $tel);
+        $stmt=$this->connect()->prepare($query);
+        $stmt->bindParam(":nom", $nom);
+        $stmt->bindParam(":prenom", $prenom);
+        $stmt->bindParam(":tete", $tel);
         $stmt->bindParam(":ville", $ville);
         $stmt->bindParam(":domaine", $domaine);
         $stmt->bindParam(":id", $id);
