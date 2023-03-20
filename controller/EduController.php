@@ -13,8 +13,9 @@ class EduController extends Education{
             and isset($_POST["fillier"])and !empty($_POST["fillier"])and isset($_POST["faculte"])and !empty($_POST["faculte"])){
             $this->setEducation($_POST["validationCustom07"],$_POST["datedebut"],$_POST["datefin"]
             ,$_POST["fillier"],$_POST["faculte"],$_SESSION["id"]);
-            
             }
+
+
         for($i=1;$i<count($idx["Education"]);$i++){
             $cont= "validationCustom07".'-' . ($i+1);
             $dd="datedebut".'-' . ($i+1);
@@ -26,12 +27,20 @@ class EduController extends Education{
             and isset($_POST[$df])and !empty($_POST[$df])
             and isset($_POST[$so])and !empty($_POST[$so])and isset($_POST[$tr])and !empty($_POST[$tr])){
                 $this->setEducation($_POST[$cont],$_POST[$dd],$_POST[$df],$_POST[$so],$_POST[$tr],$_SESSION["id"]);
-                }
+            }
+        }
         }
     }
-    
-    }
 
-    
+//////////////////////////////////////////////
+    public function EduScore($id){
+        $query="SELECT nom FROM Education WHERE idc=:id";
+        $stmt = $this->connect()->prepare($query);
+        $stmt->bindParam(":id", $id);
+        $stmt->execute();
+        $edu= $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $edu;
+////////////////////////////////////////////////////
 
+}
 }

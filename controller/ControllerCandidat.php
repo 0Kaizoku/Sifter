@@ -8,7 +8,6 @@ use Smalot\PdfParser\Parser;
 class ControllerCandidat extends Candidat{
 
 
-
     function Update(){
         if(isset($_POST["sumbit"])){
         if(isset($_POST["nom"]) and !empty($_POST["nom"]) and isset($_POST["prenom"]) and !empty($_POST["prenom"])
@@ -19,8 +18,7 @@ class ControllerCandidat extends Candidat{
     }
     
 }
-
-
+////////////////////////////////////////////////////////////////////////////
 
     public function score(){
         if(isset($_POST["sumbit"])){
@@ -31,16 +29,44 @@ class ControllerCandidat extends Candidat{
         }
     
     }
+
     public function calculCompte(){
         $comp=new ComCandidat(); 
         $nonEq=$comp->getCom($_SESSION["id"]);
         $equal= $comp->ContgetCom($_SESSION["id"],$_POST["domaine"]);
-       
-        
         $nonEq=$nonEq-$equal;
         $compScore = ($equal*2)+$nonEq;
         return $compScore;
-}
+    }       
+
+    public function  culculExp(){
+        $exp = new Exp();
+        $exps = $exp->Expscore($_SESSION["id"]);
+        $scor=0;
+        $sd=0; // initialize the variable before the loop
+        foreach($exps as $esp ){
+            if($esp["durre"]<1){
+                $sd=0;
+            }else if($esp["durre"]<6){
+                $sd=1;
+            }else if($esp["durre"]<12){
+                $sd=2;
+            }else if($esp["durre"]<24){
+                $sd=4;
+            }else{
+                $sd=6;
+            }
+            if($esp["nom"]=='Stage'){
+                $sd=$sd;
+            }else{
+                $sd=$sd*2;
+            }
+            $scor=$scor+$sd;
+        }
+
+        return $scor;
+    }
+//////////////////////////////////////////////////////////////////////
 
     public function setChoix(){
 
@@ -62,7 +88,7 @@ class ControllerCandidat extends Candidat{
             return 0;
         }
         else{
-                 $filename = 'output.pdf';
+                $filename = 'output.pdf';
         $file = fopen($filename, 'wb');
         fwrite($file, $cv);
         fclose($file);
@@ -85,5 +111,3 @@ class ControllerCandidat extends Candidat{
         }
     }
 }
-
-

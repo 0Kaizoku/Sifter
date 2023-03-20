@@ -28,6 +28,8 @@ class Education extends Connection {
         $stmt->bindParam(":fac", $faculte);
         $stmt->execute();
     }
+
+    
 }
 
 ?>
